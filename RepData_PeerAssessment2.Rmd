@@ -7,18 +7,18 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
 ```
 
-#Analysis of weather events resulting in greatest harm to American population health.
+#Analysis of weather events resulting in greatest impact to population health and economic factors in America.
 
 ## Synopsis
 TODO: Synopsis: Immediately after the title, there should be a synopsis which describes and summarizes your analysis in at most 10 complete sentences.
 
 The following summary describes the analysis performed on the [NOAA (National Oceanic and Atmospheric Administration)](http://noaa.gov/)
-) Storm Database dataset. The Analysis is focused on identifying the storm events resulting in the greatest impact to population health.
+) Storm Database dataset. The Analysis is focused on identifying the storm events resulting in the greatest cost to the economy and population health.
 
 ## Data Processing
-TODO: There should be a section titled Data Processing which describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any preprocessing outside the document. If preprocessing is time-consuming you may consider using the \color{red}{\verb|cache = TRUE|}cache=TRUE option for certain code chunks.
 
 Download and load the dataset into memory.
 ```{r}
@@ -34,10 +34,33 @@ After loading the dataset into memory lets look at it's dimensions and classes.
 ```{r}
 dims <- dim(dataset)
 
-colClasses <- sapply(dataset, classes)
+colClasses <- sapply(dataset, class)
 ```
+
 The dataset contains `r dims[1]` rows and `r dims[2]` columns. Next, we can look at the columns of the classes:
 `r colClasses`
+
+Next, to determine which events are most harmful with respect to population health we can examine the dataset to determine which events resulted in the greatest number of fatalities and injuries.
+```{r}
+#subset the data to fatalities, injuries, and event type.
+damageData <- select(dataset, FATALITIES, INJURIES, EVTYPE)
+
+```
+
+Following is a summary of the dataset containing the fatalities and injuries by event type.
+```{r}
+summary(damageData)
+```
+
+Next, we can 
+```{r}
+#group the data by event type
+damageData <- damageData %>% group_by(EVTYPE) %>% summarise(total_fat=sum(FATALITIES), total_inj=sum(INJURIES))
+
+mostDamage <- damageData %>% slice(which.max(total_fat))
+
+```
+
 
 Questions
 Your data analysis must address the following questions:
@@ -56,5 +79,7 @@ You must show all your code for the work in your analysis document. This may mak
 Assignment
 The basic goal of this assignment is to explore the NOAA Storm Database and answer some basic questions about severe weather events. You must use the database to answer the questions below and show the code for your entire analysis. Your analysis can consist of tables, figures, or other summaries. You may use any R package you want to support your analysis.
 
+#### Possible Obstacles:
+- Renovations
 
 
