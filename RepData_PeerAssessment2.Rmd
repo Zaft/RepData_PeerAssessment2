@@ -14,10 +14,8 @@ library(grid)
 library(gridExtra)
 ```
 
-
-The following summary describes the analysis performed on the [NOAA (National Oceanic and Atmospheric Administration)](http://noaa.gov/)
-) Storm Database dataset. The Analysis is focused on identifying the storm events resulting in the greatest cost to the economy and population health.
-
+## Summary
+The purpose of this document is to explore the impact that various weathers events have on population health and the economy. The dataset used in the analysis comes from [NOAA (National Oceanic and Atmospheric Administration)](http://noaa.gov/). This document will contain a section explaining the processing that was done on the data and some plots with an explanation of the analysis. All of the code for this report is visible and can be re-run to produce the artifacts associated with the analysis. First the effect of various weather events on population health will be explored to determine which results in the greatest number of injuries and fatalities. Next, weather events resulting in the greatest amount of property damage and crop damage will be explored. Plots will accompany each of the former sections.
 ## Data Processing
 
 Download and load the dataset into memory.
@@ -94,7 +92,6 @@ labs(x="Weather Event",y="Total Fatalities")+
 theme(axis.text.x=element_text(angle=45, hjust=1))
 
 plots <- grid.arrange(fatalitiesPlot, injuriesPlot, nrow=1)
-#print(plots)
 
 ```
 
